@@ -7,8 +7,8 @@ using System.Web.Http;
 
 namespace TobaccoStore.Web.Controllers
 {
-    [Authorize]
-    public class ValuesController : ApiController
+    //[Authorize]
+    public class ProductsController : ApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
@@ -28,8 +28,10 @@ namespace TobaccoStore.Web.Controllers
         }
 
         // PUT api/values/5
+        [Authorize]
         public void Put(int id, [FromBody]string value)
         {
+
         }
 
         // DELETE api/values/5
