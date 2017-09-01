@@ -25,10 +25,16 @@ namespace TobaccoStore.Web.Models
 
             var totalItems = query.Count();
 
-            if (page * pageSize > totalItems)
+            //if (totalItems <= pageSize)
+
+            if (page * pageSize > totalItems && page != 1)
                 throw new Exception("Page number is too big");
 
-            return new DataPortion<TobaccoInfo>(query.Skip(page * pageSize + 1).Take(pageSize), totalItems);
+            var resultationEntities = (page == 1) 
+                ? query.Take(pageSize) 
+                : query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return new DataPortion<TobaccoInfo>(resultationEntities, totalItems);
         }
         public TobaccoInfo GetById(int id)
         {
@@ -56,8 +62,13 @@ namespace TobaccoStore.Web.Models
             _db.TobaccoProducts.Remove(item);
             _db.SaveChanges();
         }
+        public bool Exists(TobaccoInfo item)
+        {
+            return _db.TobaccoProducts.Any(t => t.Id == item.Id);// (_db.TobaccoProducts.Find(item) == null) ? false : true;
+        }
         public void Update(TobaccoInfo item)
         {
+            _db.TobaccoProducts.Attach(item);
             _db.Entry(item).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
         }
