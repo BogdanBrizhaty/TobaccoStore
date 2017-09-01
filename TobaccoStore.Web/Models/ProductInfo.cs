@@ -23,5 +23,6 @@ namespace TobaccoStore.Web.Models
         public bool IsAvailable { get; set; }
         [IgnoreDataMember]
         public byte Discount { get; set; } // from 0 to 100 !!!
+
     }
 }
