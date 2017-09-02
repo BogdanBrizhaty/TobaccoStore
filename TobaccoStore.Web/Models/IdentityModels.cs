@@ -21,16 +21,33 @@ namespace TobaccoStore.Web.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        private static ApplicationDbContext _instance = null;
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-        
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-        public DbSet<TobaccoInfo> TobaccoProducts { get; set; }
+        //public static ApplicationDbContext Instance
+        //{
+        //    get
+        //    {
+        //        if (_instance == null)
+        //            _instance = new ApplicationDbContext();
+        //        return _instance;
+        //    }
+        //}
+        public static ApplicationDbContext GetInstance()
+        {
+            if (_instance == null)
+                _instance = new ApplicationDbContext();
+            return _instance;
+        }
+        public DbSet<ProductInfo> TobaccoProducts { get; set; }
+        public DbSet<ProductManufacturer> Manufacturers { get; set; }
 
     }
 }

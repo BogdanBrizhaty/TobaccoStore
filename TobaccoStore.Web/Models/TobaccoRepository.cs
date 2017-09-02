@@ -17,15 +17,13 @@ namespace TobaccoStore.Web.Models
         {
 
         }
-        public DataPortion<TobaccoInfo> GetMany(int page, int pageSize = 10, Ordering<TobaccoInfo> ordering = null)
+        public DataPortion<ProductInfo> GetMany(int page, int pageSize = 10, Ordering<ProductInfo> ordering = null)
         {
             var query = (ordering == null)
                 ? _db.TobaccoProducts
                 : ordering.Apply(_db.TobaccoProducts);
 
             var totalItems = query.Count();
-
-            //if (totalItems <= pageSize)
 
             if (page * pageSize > totalItems && page != 1)
                 throw new Exception("Page number is too big");
@@ -34,9 +32,9 @@ namespace TobaccoStore.Web.Models
                 ? query.Take(pageSize) 
                 : query.Skip((page - 1) * pageSize).Take(pageSize);
 
-            return new DataPortion<TobaccoInfo>(resultationEntities, totalItems);
+            return new DataPortion<ProductInfo>(resultationEntities, totalItems);
         }
-        public TobaccoInfo GetById(int id)
+        public ProductInfo GetById(int id)
         {
             var result = _db.TobaccoProducts.Find(id);
             //var result = _db.TobaccoProducts.Where(p => p.Id == id).FirstOrDefault();
@@ -46,7 +44,7 @@ namespace TobaccoStore.Web.Models
 
             return result;
         }
-        public void Add(TobaccoInfo product)
+        public void Add(ProductInfo product)
         {
             _db.TobaccoProducts.Add(product);
             _db.SaveChanges();
@@ -57,20 +55,46 @@ namespace TobaccoStore.Web.Models
             _db.TobaccoProducts.Remove(item);
             _db.SaveChanges();
         }
-        public void Delete(TobaccoInfo item)
+        public void Delete(ProductInfo item)
         {
             _db.TobaccoProducts.Remove(item);
             _db.SaveChanges();
         }
-        public bool Exists(TobaccoInfo item)
+        public bool Exists(ProductInfo item)
         {
             return _db.TobaccoProducts.Any(t => t.Id == item.Id);// (_db.TobaccoProducts.Find(item) == null) ? false : true;
         }
-        public void Update(TobaccoInfo item)
+        public void Update(ProductInfo item)
         {
             _db.TobaccoProducts.Attach(item);
             _db.Entry(item).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
+        }
+        public DataPortion<ProductInfo> FindByName(string q, int page, int pageSize = 10, Ordering<ProductInfo> ordering = null)
+        {
+            var keywords = q.Split(new char[] { ' ', '.', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+
+            var result = new List<ProductInfo>();
+
+            // test this
+            var query = _db.TobaccoProducts.Where(i => keywords.Any(kw => i.Name.Contains(kw)));
+
+            //skip take
+            if (ordering != null)
+                query = ordering.Apply(query);
+
+            var totalItems = query.Count();
+
+            if (page * pageSize > totalItems && page != 1)
+                throw new Exception("Page number is too big");
+
+            var resultationEntities = (page == 1)
+                ? query.Take(pageSize)
+                : query.Skip((page - 1) * pageSize).Take(pageSize);
+            // temporarily
+            return new DataPortion<ProductInfo>(resultationEntities, totalItems);
         }
 
     }
