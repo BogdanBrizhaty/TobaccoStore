@@ -26,8 +26,10 @@ namespace TobaccoStore.Web.Models
         public int Votes { get; set; }
         [DataMember]
         public bool IsAvailable { get; set; }
-        [IgnoreDataMember]
-        public byte Discount { get; set; } // from 0 to 100 !!!
+        //[IgnoreDataMember]
+        //public byte Discount { get; set; } // from 0 to 100 !!! In percentage
+        [DataMember]
+        public int PackageWeight { get; set; } // IN GRAMS !!!
 
         [ForeignKey("Manufacturer")]
         public int Manufacturer_Id { get; set; }
