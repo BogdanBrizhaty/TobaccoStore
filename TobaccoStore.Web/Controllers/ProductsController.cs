@@ -22,6 +22,9 @@ namespace TobaccoStore.Web.Controllers
         [Route("page/{pageNum}")]
         public DataPortion<ProductInfo> Get(int pageNum = 1, int pageSize = 10)
         {
+            if (pageNum< 1)
+                throw new Exception("Invalid page number");
+
             var data = _repo.GetMany(pageNum, pageSize);
 
             return data;
@@ -38,7 +41,7 @@ namespace TobaccoStore.Web.Controllers
         // POST api/values
         [AllowAnonymous]
         [Route("add")]
-        public void Post([FromBody]List<ProductInfo> list)
+        public void Post([FromBody]IEnumerable<ProductInfo> list)
         {
             var collection = list;
             foreach (var tobacco in list)
@@ -64,7 +67,8 @@ namespace TobaccoStore.Web.Controllers
         {
             if (!_repo.Exists(new ProductInfo() { Id = id }))
                 throw new Exception("No items with such ID were found in the store");
-            _repo.Delete(id);
+            var item = _repo.GetById(id);
+            _repo.Delete(item);
         }
 
         [AllowAnonymous]

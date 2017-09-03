@@ -19,7 +19,7 @@ namespace TobaccoStore.Web.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         private static ApplicationDbContext _instance = null;
         public ApplicationDbContext()
@@ -46,8 +46,5 @@ namespace TobaccoStore.Web.Models
                 _instance = new ApplicationDbContext();
             return _instance;
         }
-        public DbSet<ProductInfo> TobaccoProducts { get; set; }
-        public DbSet<ProductManufacturer> Manufacturers { get; set; }
-
     }
 }
