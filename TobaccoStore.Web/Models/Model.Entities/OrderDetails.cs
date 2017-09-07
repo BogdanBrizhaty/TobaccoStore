@@ -25,12 +25,13 @@ namespace TobaccoStore.Web.Models
         [DataMember]
         public decimal Cost { get; set; }
         [DataMember]
-        public decimal MobilePhone { get; set; }
+        public string MobilePhone { get; set; }
         [DataMember]
         public string Email { get; set; }
         [DataMember]
         public decimal Discount { get; set; } // calculates on product discounts
 
+        [DataMember]
         public ICollection<OrderItem> Cart { get; set; }
     }
 }

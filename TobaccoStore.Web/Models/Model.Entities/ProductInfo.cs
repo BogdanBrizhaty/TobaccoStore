@@ -32,6 +32,7 @@ namespace TobaccoStore.Web.Models
         public int PackageWeight { get; set; } // IN GRAMS !!!
 
         [ForeignKey("Manufacturer")]
+        [DataMember]
         public int Manufacturer_Id { get; set; }
 
         // nav props
