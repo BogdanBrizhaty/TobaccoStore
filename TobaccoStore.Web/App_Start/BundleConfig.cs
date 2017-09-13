@@ -27,6 +27,15 @@ namespace TobaccoStore.Web
             bundles.Add(new ScriptBundle("~/bundles/angular")
                 .Include("~/Scripts/angular.min.js")
                 .Include("~/Scripts/angular-route.min.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/client")
+                .Include("~/Client/JSEventHandlers.js")
+                .Include("~/Client/app.js")
+                .Include("~/Client/RouteConfig.js")
+                .IncludeDirectory("~/Client/Services", "*.js")
+                .IncludeDirectory("~/Client/Directives", "*.js")
+                .IncludeDirectory("~/Client/Controllers", "*.js"));
         }
     }
 }
