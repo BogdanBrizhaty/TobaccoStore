@@ -5,16 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
+using TobaccoStore.Web.Models.Model.Entities;
 
 namespace TobaccoStore.Web.Models
 {
     [DataContract]
-    public class ProductInfo
+    public class ProductInfo : IDbEntity
     {
         [DataMember]
         [Key]
         public int Id { get; set; }
-        [IgnoreDataMember]
+        [DataMember]
         public byte[] Photo { get; set; }
         [DataMember]
         public string Name { get; set; }
@@ -30,6 +31,8 @@ namespace TobaccoStore.Web.Models
         //public byte Discount { get; set; } // from 0 to 100 !!! In percentage
         [DataMember]
         public int PackageWeight { get; set; } // IN GRAMS !!!
+        [DataMember]
+        public decimal Price { get; set; }
 
         [ForeignKey("Manufacturer")]
         [DataMember]

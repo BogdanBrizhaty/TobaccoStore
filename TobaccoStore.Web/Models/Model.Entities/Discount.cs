@@ -5,11 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
+using TobaccoStore.Web.Models.Model.Entities;
 
 namespace TobaccoStore.Web.Models
 {
     [DataContract]
-    public class Discount
+    public class Discount : IDbEntity
     {
         [DataMember]
         [Key]

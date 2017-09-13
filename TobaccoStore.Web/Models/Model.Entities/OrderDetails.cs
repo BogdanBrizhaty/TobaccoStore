@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
+using TobaccoStore.Web.Models.Model.Entities;
 
 namespace TobaccoStore.Web.Models
 {
     [DataContract]
-    public class OrderDetails
+    public class OrderDetails : IDbEntity
     {
         [DataMember]
         [Key]
@@ -30,6 +31,11 @@ namespace TobaccoStore.Web.Models
         public string Email { get; set; }
         [DataMember]
         public decimal Discount { get; set; } // calculates on product discounts
+        [DataMember]
+        public string UserAccessToken { get; set; }
+        // displays if user has access to view its
+        [DataMember]
+        public bool UserAccessPermition { get; set; }
 
         [DataMember]
         public ICollection<OrderItem> Cart { get; set; }
