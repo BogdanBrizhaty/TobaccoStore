@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,19 +14,21 @@ namespace TobaccoStore.Web.Controllers
     public class TobaccoController : ApiController
     {
         private TobaccoRepository _repo = null;
+        private ManufacturerRepository _manufacturerRepo = null;
         public TobaccoController()
         {
             _repo = new TobaccoRepository();
+            _manufacturerRepo = new ManufacturerRepository();
         }
         // GET api/values
         [AllowAnonymous]
         [Route("page/{pageNum}")]
-        public DataPortion<ProductInfo> Get(int pageNum = 1, int pageSize = 10)
+        public DataPortion<ProductInfo> Get([FromUri]int manufacturerId, int pageNum = 1, [FromUri]int pageSize = 8)
         {
             if (pageNum< 1)
                 throw new Exception("Invalid page number");
 
-            var data = _repo.GetMany(pageNum, pageSize);
+            var data = _repo.FilterByManufacturer(manufacturerId, pageNum, pageSize);
 
             return data;
         }
@@ -41,22 +44,38 @@ namespace TobaccoStore.Web.Controllers
         // POST api/values
         [AllowAnonymous]
         [Route("add")]
-        public void Post([FromBody]IEnumerable<ProductInfo> list)
+        public void Post([FromBody]object rawItem)
         {
-            var collection = list;
-            foreach (var tobacco in list)
-                _repo.Add(tobacco);
+            var json = rawItem.ToString();
+            var settings = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+
+            var productInfo = JsonConvert.DeserializeObject<ProductInfo>(json, settings);
+            if (_repo.Exists(productInfo.Id))
+                throw new Exception("There is already item with such id in the store");
+
+            var base64photo = JsonConvert.DeserializeAnonymousType(json, new { Photo = "" }, settings);
+            productInfo.Photo = Convert.FromBase64String(base64photo.Photo);
+
+            _repo.Add(productInfo);
         }
 
         // PUT api/values/5
         //[Authorize]
         [AllowAnonymous]
         [Route("update")]
-        public void Put([FromBody]ProductInfo item)
+        public void Put([FromBody]object rawItem)
         {
-            if (!_repo.Exists(item))
+            var json = rawItem.ToString();
+            var settings = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+
+            var productInfo = JsonConvert.DeserializeObject<ProductInfo>(json, settings);
+            if (!_repo.Exists(productInfo.Id))
                 throw new Exception("No such items were found in the store");
-            _repo.Update(item);
+
+            var base64photo = JsonConvert.DeserializeAnonymousType(json, new { Photo = "" }, settings);
+            productInfo.Photo = Convert.FromBase64String(base64photo.Photo);
+
+            _repo.Update(productInfo);
         }
 
         // DELETE api/values/5
@@ -81,5 +100,20 @@ namespace TobaccoStore.Web.Controllers
 
             return _repo.FindByName(q, page);
         }
+
+        #region Manufacturer access functions
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("manufacturers/{id}")]
+        public ProductManufacturer Manufacturer(int id)
+        {
+            if (id < 1)
+                throw new Exception("Invalid ManufacturerId");
+
+            return _manufacturerRepo.GetById(id);
+        }
+
+        #endregion
     }
 }
