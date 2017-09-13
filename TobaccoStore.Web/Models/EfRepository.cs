@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using TobaccoStore.Web.Models.Model.Entities;
 
 namespace TobaccoStore.Web.Models
 {
@@ -10,7 +11,7 @@ namespace TobaccoStore.Web.Models
     /// Abstract EF repository class. supports inheritance
     /// </summary>
 
-    public class EfRepository<TEntity, TKey> where TEntity : class// : IRepository<TEntity, TKey> where TEntity : class, IDbEntity
+    public class EfRepository<TEntity, TKey> where TEntity : class, IDbEntity// : IRepository<TEntity, TKey> where TEntity : class, IDbEntity
     {
         // dbcontext placeholder, DbContext property backing field
         private readonly DbContext _dataContext = null;
@@ -83,11 +84,23 @@ namespace TobaccoStore.Web.Models
 
         public virtual void Update(TEntity item)
         {
-            DataContext.Set<TEntity>().Attach(item);
-            DataContext.Entry(item).State = EntityState.Modified;
+            //DataContext.Set<TEntity>().Attach(item);
+            var dbItem = DataContext.Set<TEntity>().Find(item.Id);
+
+            if (dbItem == null)
+                return;
+
+            DataContext.Entry(dbItem).CurrentValues.SetValues(item);
+
+            DataContext.Entry(dbItem).State = EntityState.Modified;
             DataContext.SaveChanges();
         }
-
+        public virtual bool Exists(TKey id)
+        {
+            return (DataContext.Set<TEntity>().Find(id) == null)
+                ? false
+                : true;
+        }
         public virtual bool Exists(TEntity item)
         {
             return DataContext.Set<TEntity>().Local.Any(e => e == item);
