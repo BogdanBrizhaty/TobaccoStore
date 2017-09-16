@@ -215,6 +215,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MailService.cs" />
     <Compile Include="Migrations\201708310944522_Initial.cs" />
     <Compile Include="Migrations\201708310944522_Initial.Designer.cs">
       <DependentUpon>201708310944522_Initial.cs</DependentUpon>
@@ -255,15 +256,26 @@
     <Compile Include="Migrations\201709061524465_CartInclude.Designer.cs">
       <DependentUpon>201709061524465_CartInclude.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709080934246_TokenToOrderDetailsAdded.cs" />
+    <Compile Include="Migrations\201709080934246_TokenToOrderDetailsAdded.Designer.cs">
+      <DependentUpon>201709080934246_TokenToOrderDetailsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.cs" />
+    <Compile Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.Designer.cs">
+      <DependentUpon>201709121012477_Price_to_ProductInfo_added_12_09.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Binders\CustomByteArrayModelBinder.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\DataPortion.cs" />
     <Compile Include="Models\DiscountRepository.cs" />
     <Compile Include="Models\EfRepository.cs" />
+    <Compile Include="Models\ManufacturerRepository.cs" />
     <Compile Include="Models\Model.Entities\Discount.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Model.Entities\IDbEntity.cs" />
     <Compile Include="Models\Model.Entities\OrderDetails.cs" />
     <Compile Include="Models\Ordering.cs" />
     <Compile Include="Models\Model.Entities\OrderItem.cs" />
@@ -281,10 +293,42 @@
     <Content Include="Client\app.js" />
     <Content Include="Client\Controllers\CartController.js" />
     <Content Include="Client\Controllers\HomeController.js" />
+    <Content Include="Client\Controllers\ManageController.js" />
+    <Content Include="Client\Controllers\TobaccoController.js" />
+    <Content Include="Client\Directives\ActivePageHelperDirective.js" />
+    <Content Include="Client\Directives\AddToCartButtonDirective.js" />
+    <Content Include="Client\Directives\PagingDirective.js" />
+    <Content Include="Client\Services\CartService.js" />
+    <Content Include="Client\Services\CredentialsService.js" />
+    <Content Include="Client\Services\DiscountService.js" />
+    <Content Include="Client\Services\OrderService.js" />
+    <Content Include="Client\Services\TobaccoService.js" />
+    <Content Include="Client\Views\General\About.html" />
+    <Content Include="Client\Views\General\DeliveryAndPayment.html" />
     <Content Include="Client\Views\General\Home.html" />
+    <Content Include="Client\Views\General\imgandmenucontainer.html" />
+    <Content Include="Client\Views\General\Manage.html" />
+    <Content Include="Client\Views\General\Tobacco.html" />
+    <Content Include="Client\Views\Partial\Manage.add.html" />
     <Content Include="Client\Views\Partial\Cart.html" />
+    <Content Include="Client\Views\Partial\List.html" />
+    <Content Include="Client\Views\Partial\Login.html" />
+    <Content Include="Client\Views\Partial\OrderFail.html" />
+    <Content Include="Client\Views\Partial\OrderSuccess.html" />
+    <Content Include="Client\Views\Partial\ProceedOrder.html" />
+    <Content Include="Client\Views\Partial\ProductInfo.html" />
+    <Content Include="Client\Views\Partial\ProductList.html" />
+    <Content Include="Client\Views\Partial\ViewOrder.html" />
+    <Content Include="Content\alfakherBackground.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\close.svg" />
+    <Content Include="Content\darksideBackground.png" />
+    <Content Include="Content\emptyfile.png" />
+    <Content Include="Content\fumariBackground.jpg" />
+    <Content Include="Content\logo.png" />
+    <Content Include="Content\logo2.png" />
+    <Content Include="Content\serbentliBackground.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -317,6 +361,7 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Client\JSEventHandlers.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -345,8 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Client\Directives\" />
-    <Folder Include="Client\Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -386,6 +429,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709061524465_CartInclude.resx">
       <DependentUpon>201709061524465_CartInclude.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709080934246_TokenToOrderDetailsAdded.resx">
+      <DependentUpon>201709080934246_TokenToOrderDetailsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.resx">
+      <DependentUpon>201709121012477_Price_to_ProductInfo_added_12_09.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
