@@ -1,0 +1,20 @@
+﻿<div class="row" id="productContainer">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 list-item" ng-repeat="product in ProductList">
+        <div class="list-item-include" ng-mouseover="showButton(product.Id)" onmouseout="HideButton()">
+            <a class="product-link" href="/#!/tobacco/{{product.Id}}">
+                <img ng-src="{{getImage(product.Photo)}}"/>
+                <!--src="http://www.fumari.com/media/catalog/product/cache/1/small_image/290x/9df78eab33525d08d6e5fb8d27136e95/h/o/hookah-tobacco-ambrosia.png" />-->
+                <span class="product-header">{{product.Name}}</span>
+            </a>
+        </div>
+        <div class="btn-container" onmouseout="HideButton2()">
+            <!--<add-to-cart-btn></add-to-cart-btn>-->
+            <span class="add-to-cart-unactive">&nbsp;</span>
+            <!--<a class="add-to-cart half-opacity" onclick="removeFromCart()">Убрать</a>-->
+            <!--<a class="add-to-cart" onclick="addToCart()">Добавить в корзину</a>-->
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <product-paging></product-paging>
+</div>
