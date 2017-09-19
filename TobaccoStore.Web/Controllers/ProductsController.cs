@@ -54,7 +54,12 @@ namespace TobaccoStore.Web.Controllers
                 throw new Exception("There is already item with such id in the store");
 
             var base64photo = JsonConvert.DeserializeAnonymousType(json, new { Photo = "" }, settings);
-            productInfo.Photo = Convert.FromBase64String(base64photo.Photo);
+            //if ()
+            //productInfo.Photo = (base64photo.Photo == null) ? new byte[1] : Convert.FromBase64String(base64photo.Photo);
+            productInfo.Photo = Convert.FromBase64String((base64photo.Photo == null) ? "" : base64photo.Photo);
+
+            foreach (var item in productInfo.PackageInfoes)
+                item.ProductInfo = productInfo;
 
             _repo.Add(productInfo);
         }
@@ -73,7 +78,11 @@ namespace TobaccoStore.Web.Controllers
                 throw new Exception("No such items were found in the store");
 
             var base64photo = JsonConvert.DeserializeAnonymousType(json, new { Photo = "" }, settings);
-            productInfo.Photo = Convert.FromBase64String(base64photo.Photo);
+            productInfo.Photo = Convert.FromBase64String((base64photo.Photo == null) ? "" : base64photo.Photo);
+            //productInfo.Photo = Convert.FromBase64String(base64photo.Photo);
+
+            foreach (var item in productInfo.PackageInfoes)
+                item.ProductInfo = productInfo;
 
             _repo.Update(productInfo);
         }

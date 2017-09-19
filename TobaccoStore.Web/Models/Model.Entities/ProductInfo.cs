@@ -29,10 +29,15 @@ namespace TobaccoStore.Web.Models
         public bool IsAvailable { get; set; }
         //[IgnoreDataMember]
         //public byte Discount { get; set; } // from 0 to 100 !!! In percentage
-        [DataMember]
-        public int PackageWeight { get; set; } // IN GRAMS !!!
-        [DataMember]
-        public decimal Price { get; set; }
+
+        // replaced to string to store simple numbers
+        // in json variant, f.eg. [ { 'Price' : 11, 'Weight' : 100}, ...] etc.
+        // so no need to create another one entity 
+        // that describes packageweight and rewrite backend
+        //[DataMember]
+        //public string PackageWeight { get; set; }
+        //[DataMember]
+        //public decimal Price { get; set; }
 
         [ForeignKey("Manufacturer")]
         [DataMember]
@@ -40,5 +45,8 @@ namespace TobaccoStore.Web.Models
 
         // nav props
         public virtual ProductManufacturer Manufacturer { get; set; }
+        
+        [DataMember]
+        public ICollection<PackageInfo> PackageInfoes { get; set; }
     }
 }
