@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #demo {
+            background: url(../../../Content/fumariBackground.jpg) no-repeat center center;
+            height: 540px;
+            width: 100%;
+            /*overflow: hidden;*/
+        }
+
+
+
+        .hdr-msg {
+            padding: 0.5%;
+            padding-left: 1%;
+            padding-right: 2.5%;
+            background-color: #222222;
+            color: #dfdfdf;
+        }
+        .hdr-msg a, .hdr-msg a:visited {
+            color: #dfdfdf;
+        }
+        /* f - stands for floating/location */
+        .f-left {
+            float: left;
+        }
+        .f-right {
+            float: right;
+        }
+
+        .hdr-main {
+            height: 90px;
+            color: #dfdfdf;
+            background: rgba(0, 0, 0, 0.5) !important;
+            padding-top: 20px;
+        }
+        .hdr-main::before {
+
+        }
+        h2 {
+            font-weight: 700;
+        }
+        .menu-item {
+            display: inline-block;
+            height: 70%;
+            padding: 0 2.5%;
+        }
+        .menu-item a {
+            font-weight: 700;
+            height: 70%;
+            font-size: 20pt;
+            color:white;
+        }
+        .menu-item a:hover {
+            text-decoration: none;
+            color: #4aaf30;
+            /*background: rgba(0,0,0,0.5);*/
+        }
+        .menu-item a:active, .menu-item a:visited, .menu-item a:focus {
+            text-decoration: none !important;
+            /*color: pink;*/
+        }
+        .menu-item a .active-link {
+            color: #4aaf30;
+        }
+        /*a {
+            color: white;
+        }*/
+        .active-link {
+            /*border: 2px solid white;*/
+            padding: 2%;
+            /*padding-top*/
+            background: rgba(0,0,0,0.35);
+            min-height: 70px;
+        }
+        .active-link a {
+            color: #4aaf30;
+        }
+    </style>
+</head>
+<body>
+    <div id="demo">
+        <div class="hdr-main row">
+            <div class="col-lg-1">
+            </div>
+
+            <div class="col-lg-6">
+                <div class="menu-item active-link">
+                    <a href="/#!/fumari" onclick="fumariClick()" title="Табак Fumari">Fumari</a>
+                </div>
+                <div class="menu-item">
+                    <a href="/#!/serbentli" onclick="serbentliClick()" title="Табак Serbentli">
+                        Serbentli
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="/#!/alfakher" onclick="alfakherClick()" title="Табак Al Fakher">
+                        Al Fakher
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="/#!/darkside" onclick="darksideClick()" title="Табак Darkside">
+                        Darkside
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

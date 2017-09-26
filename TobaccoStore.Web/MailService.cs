@@ -8,8 +8,8 @@ namespace TobaccoStore.Web
 {
     public class MailService
     {
-        private const string SENDER_EMAIL = @"EMAIL";
-        private const string SENDER_EMAIL_PASSWORD = @"PASSWORD";
+        private const string SENDER_EMAIL = @"optobacco@gmail.com";
+        private const string SENDER_EMAIL_PASSWORD = @"chavel4130";
         public void SendEmail(string subject, 
             string body,
             string sender,

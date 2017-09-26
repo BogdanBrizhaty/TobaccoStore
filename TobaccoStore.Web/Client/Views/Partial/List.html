@@ -1,7 +1,7 @@
 ﻿<div class="row">
-    <!--<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
         Id
-    </div>-->
+    </div>
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
         <span>Manufacturer</span>
     </div>
@@ -18,10 +18,10 @@
         <span>Price</span>
     </div>
 </div>
-<div class="row" ng-repeat="product in ProductsInCart">
-    <!--<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+<div class="row" ng-repeat="product in ProductList">
+    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
         {{product.Id}}
-    </div>-->
+    </div>
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
         <a href="/#!/{{product.ManufacturerName}}">{{product.ManufacturerName}}</a>
     </div>
@@ -36,5 +36,13 @@
     </div>
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
         <span>{{product.Price}}</span>
+    </div>
+    <div>
+        <button class="btn btn-default">
+            <span class="glyphicon-edit"></span>
+        </button>
+        <button class="btn btn-default">
+            <span class="glyphicon-remove"></span>
+        </button>
     </div>
 </div>

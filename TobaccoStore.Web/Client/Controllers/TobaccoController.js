@@ -1,63 +1,37 @@
 ﻿app.controller('TobaccoController', ['$scope', '$http', '$routeParams', '$location', 'TobaccoService', 'CartService',
     function ($scope, $http, $routeParams, $location, TobaccoService, CartService) {
 
+    var updateCartView = () => {
+        //$rootScope.cartInfo = CartService.itemsInCart();
+        //$rootScope.$apply();
+        $('#cart-count').html(CartService.itemsInCart());
+    }
+
+    var locations = ['fumari', 'serbentli', 'alfakher', 'darkside', 'test', 'batu'];
+
+    updateCartView();
+
     $scope.goToPage = (page) => {
         if (page == $scope.currentPage)
             return;
-        // load test
-        if ($location.path() == '/test')
-            TobaccoService.getProducts(page, 5).then((e) => {
-                $scope.ProductList = e.data.Items;
-                $scope.currentPage = page;
-                $scope.totalItems = e.data.Count;
-                $scope.totalPages = (Math.ceil($scope.totalItems / 8));
-                console.log('pages: ' + $scope.totalPages);
-            });
 
-        // load fumari
-        if ($location.path() == '/fumari')
-            TobaccoService.getProducts(page, 1).then((e) => {
-                $scope.ProductList = e.data.Items;
-                $scope.currentPage = page;
-                $scope.totalItems = e.data.Count;
-                $scope.totalPages = (Math.ceil($scope.totalItems / 8));
-                console.log('pages: ' + $scope.totalPages);
-            });
+        var curLocation = $location.path();
 
-        // load darkside
-        if ($location.path() == '/serbentli')
-            TobaccoService.getProducts(page, 2).then((e) => {
-                $scope.ProductList = e.data.Items;
-                $scope.currentPage = page;
-                $scope.totalItems = e.data.Count;
-                $scope.totalPages = (Math.ceil($scope.totalItems / 8));
-                console.log('pages: ' + $scope.totalPages);
-            });
+        var tid = 1 + locations.indexOf(curLocation.replace('/', ''));
 
-        // load darkside
-        if ($location.path() == '/alfakher')
-            TobaccoService.getProducts(page, 3).then((e) => {
-                $scope.ProductList = e.data.Items;
-                $scope.currentPage = page;
-                $scope.totalItems = e.data.Count;
-                $scope.totalPages = (Math.ceil($scope.totalItems / 8));
-                console.log('pages: ' + $scope.totalPages);
-            });
-
-        // load darkside
-        if ($location.path() == '/darkside')
-            TobaccoService.getProducts(page, 4).then((e) => {
-                $scope.ProductList = e.data.Items;
-                $scope.currentPage = page;
-                $scope.totalItems = e.data.Count;
-                $scope.totalPages = (Math.ceil($scope.totalItems / 8));
-                console.log('pages: ' + $scope.totalPages);
-            });
-
-        
+        TobaccoService.getProducts(page, tid).then((e) => {
+            $scope.ProductList = e.data.Items;
+            $scope.currentPage = page;
+            $scope.totalItems = e.data.Count;
+            $scope.totalPages = (Math.ceil($scope.totalItems / 8));
+            console.log('loaded');
+            $('#content-holder').removeClass('d-none').addClass('d-block');
+            $('#preloader-holder').removeClass('d-block').addClass('d-none');
+        });
     };
     $scope.getImage = function (data) {
-        return (data === undefined || data == null)
+        //console.log('img = ' + data);
+        return (data === undefined || data == null || data == '')
             ? '/Content/emptyfile.png'
             : 'data:image/png;base64,' + data;
     };
@@ -66,8 +40,10 @@
         console.log('TID ' + $routeParams.id);
         TobaccoService.getProduct($routeParams.id).then((e) => {
             $scope.TobaccoInfo = e.data;
+
+            if ($scope.TobaccoInfo.PackageInfoes.length > 0)
+                $scope.selectedPackaging = $scope.TobaccoInfo.PackageInfoes[0];
         });
-        //$scope.TobaccoInfo = TobaccoService.getProduct();
     }
     $scope.incCount = () => {
         $scope.Count++;
@@ -80,8 +56,12 @@
         return CartService.isInCart(id);
     };
 
+    $scope.selectPackageWeight = (packageInfo) => {
+        $scope.selectedPackaging = packageInfo;
+
+    };
+
     var addToCart = () => {
-        //CartService.addProduct({});
         $http.get('/api/tobacco/manufacturers/' + $scope.TobaccoInfo.Manufacturer_Id).then(d => {
             CartService.addProduct({
                 Id: $scope.TobaccoInfo.Id,
@@ -92,11 +72,13 @@
                 Price: $scope.Count * $scope.TobaccoInfo.Price,
                 Amount: $scope.Count
             });
-            console.log('success');
+            updateCartView();
+
         });
     };
     var removeFromCart = () => {
         CartService.removeProduct($scope.TobaccoInfo.Id);
+        updateCartView();
     };
     
     $scope.addToCartBtnClick = () => {
@@ -108,54 +90,54 @@
 
 
     // implemented to be used in tobacco list
-    $scope.addToCartHndlr = () => {
-        var sender = event.currentTarget.parentElement.parentElement;
-        var link = $(sender).first().find('.product-link');
-        $.each(link, (i, el) => {
-            var match = el.href.match(/tobacco\/\d+/g);
-            var intId = parseInt(match[0].replace('tobacco/', ''));
-            $http.get('/api/tobacco/' + intId).then((e) => {
-                var manufacturerId = e.data.Manufacturer_Id;
-                $http.get('/api/tobacco/manufacturers/' + manufacturerId).then(d => {
-                    CartService.addProduct({
-                        Id: intId,
-                        Name: e.data.Name,
-                        Manufacturer_Id: manufacturerId,
-                        ManufacturerName: d.data.Name,
-                        ListPrice: e.data.Price,
-                        Price: e.data.Price,
-                        Amount: 1
-                    });
-                });
-            });
-        });
-        var cont = $(sender).find(".btn-container").first();
-        cont.html('<a class="add-to-cart half-opacity" onclick="removeFromCartEventHandler()">Убрать</a>');
+    //$scope.addToCartHndlr = () => {
+    //    var sender = event.currentTarget.parentElement.parentElement;
+    //    var link = $(sender).first().find('.product-link');
+    //    $.each(link, (i, el) => {
+    //        var match = el.href.match(/tobacco\/\d+/g);
+    //        var intId = parseInt(match[0].replace('tobacco/', ''));
+    //        $http.get('/api/tobacco/' + intId).then((e) => {
+    //            var manufacturerId = e.data.Manufacturer_Id;
+    //            $http.get('/api/tobacco/manufacturers/' + manufacturerId).then(d => {
+    //                CartService.addProduct({
+    //                    Id: intId,
+    //                    Name: e.data.Name,
+    //                    Manufacturer_Id: manufacturerId,
+    //                    ManufacturerName: d.data.Name,
+    //                    ListPrice: e.data.Price,
+    //                    Price: e.data.Price,
+    //                    Amount: 1
+    //                });
+    //            });
+    //        });
+    //    });
+    //    var cont = $(sender).find(".btn-container").first();
+    //    cont.html('<a class="add-to-cart half-opacity" onclick="removeFromCartEventHandler()">Убрать</a>');
 
-        console.log('items in cart: ' + CartService.itemsInCart());
-        $scope.itemsCount = CartService.itemsInCart();
-    };
-    $scope.removeFromCartHndlr = () => {
-        var sender = event.currentTarget.parentElement.parentElement;
-        var link = $(sender).first().find('.product-link');
-        $.each(link, (i, el) => {
-            var match = el.href.match(/tobacco\/\d+/g);
-            var intId = parseInt(match[0].replace('tobacco/', ''));
-            CartService.removeProduct(intId);
-        });
-        var cont = $(sender).find(".btn-container").first();
-        cont.html('<a class="add-to-cart" onclick="addToCartEventHandler()">Добавить в корзину</a>');
+    //    console.log('items in cart: ' + CartService.itemsInCart());
+    //    $scope.itemsCount = CartService.itemsInCart();
+    //};
+    //$scope.removeFromCartHndlr = () => {
+    //    var sender = event.currentTarget.parentElement.parentElement;
+    //    var link = $(sender).first().find('.product-link');
+    //    $.each(link, (i, el) => {
+    //        var match = el.href.match(/tobacco\/\d+/g);
+    //        var intId = parseInt(match[0].replace('tobacco/', ''));
+    //        CartService.removeProduct(intId);
+    //    });
+    //    var cont = $(sender).find(".btn-container").first();
+    //    cont.html('<a class="add-to-cart" onclick="addToCartEventHandler()">Добавить в корзину</a>');
 
-        console.log('items in cart: ' + CartService.itemsInCart());
-        $scope.itemsCount = CartService.itemsInCart();
-    };
-    $scope.showButton = (id) => {
-        var container = event.currentTarget.parentElement;
-        var cont = $(container).find(".btn-container").first();
-        if (CartService.isInCart(id))
-            cont.html('<a class="add-to-cart half-opacity" ng-click="removeFromCart(' + id + ')" onclick="removeFromCartEventHandler()">Убрать</a>');
-        else
-            cont.html('<a class="add-to-cart" onclick="addToCartEventHandler()">Добавить в корзину</a>');
-    };
+    //    console.log('items in cart: ' + CartService.itemsInCart());
+    //    $scope.itemsCount = CartService.itemsInCart();
+    //};
+    //$scope.showButton = (id) => {
+    //    var container = event.currentTarget.parentElement;
+    //    var cont = $(container).find(".btn-container").first();
+    //    if (CartService.isInCart(id))
+    //    //    cont.html('<a class="add-to-cart half-opacity" ng-click="removeFromCart(' + id + ')" onclick="removeFromCartEventHandler()">Убрать</a>');
+    //    //else
+    //        cont.html('<a class="add-to-cart half-opacity" style="cursor: default;">В корзине</a>');
+    //};
     $scope.goToPage(1);
 }]);

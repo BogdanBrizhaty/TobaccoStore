@@ -2,13 +2,15 @@
     return {
         restrict: 'E',
         scope: true,
-        template: '<ul class="pagination">' +
+        link: (scope, element) => {
+            var pagesAmountToDisplay = 10;
+
+            var template = '<ul class="pagination">' +
             '<li ng-repeat="pageNum in pages"' +
             'ng-class="pageNum == currentPage ? \'active\' : \'\'">' +
             '<a ng-click="goToPage(pageNum)"><span>{{pageNum}}</span></a></li>' +
-            '</ul>',
-        link: (scope, element) => {
-            var pagesAmountToDisplay = 10;
+            '</ul>';
+
 
             var getPages = (curPage) => {
                 var tmp = [];
@@ -36,7 +38,16 @@
 
             scope.$watch('totalItems', (value, old) => {
                 scope.pages = getPages(scope.currentPage);
+
+                element.html(template);
+
+                if (scope.totalPages == 1)
+                    element.html('');
             });
+
+
+
+
         }
     };
 }]);

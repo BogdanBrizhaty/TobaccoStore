@@ -14,8 +14,9 @@
                 {{TobaccoInfo.Description}}
             </span>
             <br />
-            <h2>
-                UAH {{TobaccoInfo.Price}}
+            <h2 ng-init="selectedPackaging = initPrice(TobaccoInfo.PackageInfoes)">
+                <!--UAH {{TobaccoInfo.Price}}-->
+                UAH {{selectedPackaging.ListPrice}}
             </h2>
             <br />
             <div class="row line">
@@ -31,7 +32,15 @@
             </div>
             <div class="row line">
                 <h4>
-                    Фасовка(г)&nbsp;{{TobaccoInfo.PackageWeight}}
+                    Фасовка(г)&nbsp;
+                    <!--{{TobaccoInfo.PackageInfoes}}-->
+                    <button ng-disabled="isInCart(TobaccoInfo.Id)" 
+                            ng-repeat="package in TobaccoInfo.PackageInfoes"
+                            class="btn-bordered"
+                            ng-class="(selectedPackaging.Weight == package.Weight) ? 'selected' : ''"
+                            ng-click="selectPackageWeight(package)">
+                        {{package.Weight}} г.
+                    </button>
                 </h4>
             </div>
             <div class="row" style="padding: 2%;">

@@ -264,6 +264,34 @@
     <Compile Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.Designer.cs">
       <DependentUpon>201709121012477_Price_to_ProductInfo_added_12_09.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709171623201_PackageWeightToStringDataType.cs" />
+    <Compile Include="Migrations\201709171623201_PackageWeightToStringDataType.Designer.cs">
+      <DependentUpon>201709171623201_PackageWeightToStringDataType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171851391_PackageInfo.cs" />
+    <Compile Include="Migrations\201709171851391_PackageInfo.Designer.cs">
+      <DependentUpon>201709171851391_PackageInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171854265_PackageInfoInOrderItem.cs" />
+    <Compile Include="Migrations\201709171854265_PackageInfoInOrderItem.Designer.cs">
+      <DependentUpon>201709171854265_PackageInfoInOrderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171906577_PackageInfoWorking.cs" />
+    <Compile Include="Migrations\201709171906577_PackageInfoWorking.Designer.cs">
+      <DependentUpon>201709171906577_PackageInfoWorking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171920439_PackageInfoSt2.cs" />
+    <Compile Include="Migrations\201709171920439_PackageInfoSt2.Designer.cs">
+      <DependentUpon>201709171920439_PackageInfoSt2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171928405_PackageInfoSt22.cs" />
+    <Compile Include="Migrations\201709171928405_PackageInfoSt22.Designer.cs">
+      <DependentUpon>201709171928405_PackageInfoSt22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171932323_PackageInfoSt222.cs" />
+    <Compile Include="Migrations\201709171932323_PackageInfoSt222.Designer.cs">
+      <DependentUpon>201709171932323_PackageInfoSt222.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -277,6 +305,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Model.Entities\IDbEntity.cs" />
     <Compile Include="Models\Model.Entities\OrderDetails.cs" />
+    <Compile Include="Models\Model.Entities\PackageInfo.cs" />
     <Compile Include="Models\Ordering.cs" />
     <Compile Include="Models\Model.Entities\OrderItem.cs" />
     <Compile Include="Models\Model.Entities\ProductInfo.cs" />
@@ -297,6 +326,7 @@
     <Content Include="Client\Controllers\TobaccoController.js" />
     <Content Include="Client\Directives\ActivePageHelperDirective.js" />
     <Content Include="Client\Directives\AddToCartButtonDirective.js" />
+    <Content Include="Client\Directives\HintDirective.js" />
     <Content Include="Client\Directives\PagingDirective.js" />
     <Content Include="Client\Services\CartService.js" />
     <Content Include="Client\Services\CredentialsService.js" />
@@ -318,17 +348,22 @@
     <Content Include="Client\Views\Partial\ProceedOrder.html" />
     <Content Include="Client\Views\Partial\ProductInfo.html" />
     <Content Include="Client\Views\Partial\ProductList.html" />
+    <Content Include="Client\Views\Partial\Terms.html" />
     <Content Include="Client\Views\Partial\ViewOrder.html" />
     <Content Include="Content\alfakherBackground.png" />
+    <Content Include="Content\arrowDown.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cartIcon.png" />
     <Content Include="Content\close.svg" />
     <Content Include="Content\darksideBackground.png" />
     <Content Include="Content\emptyfile.png" />
     <Content Include="Content\fumariBackground.jpg" />
+    <Content Include="Content\loading.css" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\logo2.png" />
     <Content Include="Content\serbentliBackground.png" />
+    <Content Include="Content\testBackground.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -435,6 +470,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.resx">
       <DependentUpon>201709121012477_Price_to_ProductInfo_added_12_09.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171623201_PackageWeightToStringDataType.resx">
+      <DependentUpon>201709171623201_PackageWeightToStringDataType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171851391_PackageInfo.resx">
+      <DependentUpon>201709171851391_PackageInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171854265_PackageInfoInOrderItem.resx">
+      <DependentUpon>201709171854265_PackageInfoInOrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171906577_PackageInfoWorking.resx">
+      <DependentUpon>201709171906577_PackageInfoWorking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171920439_PackageInfoSt2.resx">
+      <DependentUpon>201709171920439_PackageInfoSt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171928405_PackageInfoSt22.resx">
+      <DependentUpon>201709171928405_PackageInfoSt22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171932323_PackageInfoSt222.resx">
+      <DependentUpon>201709171932323_PackageInfoSt222.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
