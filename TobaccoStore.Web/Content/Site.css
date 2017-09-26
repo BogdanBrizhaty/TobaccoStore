@@ -1,12 +1,16 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    background-color:#F3F3F3;
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+    min-width: 480px;
 }
+
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    /*padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -14,4 +18,245 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.row {
+    /*background-color:white;*/
+}
+
+.list-item {
+    background-color: transparent;
+    padding: 10px 5px 0 5px;
+    /*padding-bottom: calc(.add-to-cart)*/
+}
+.list-item:hover {
+    /*opacity: 0.5;*/
+
+}
+.list-item-include {
+    margin: 0;
+    background-color: white;
+    text-align: center;
+    padding-bottom:1px;
+    /*margin-right: 5px;*/
+}
+.list-item-include:hover {
+    opacity: 0.5;
+}
+.container {
+    
+}
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+h1 {
+    font-weight: 700;
+    font-size: 32pt;
+}
+
+.line {
+    border-bottom: 1px solid #CCCCCC;
+    padding: 2%;
+}
+
+.btn-qty {
+    font-size: 16pt;
+    font-weight: 600;
+    height: 12%;
+    width: 12%;
+    background-color: #F0F0F0;
+    color: #A4A4A4;
+    border-radius: 0;
+    border: none;
+    outline: none;
+}
+.btn-qty:focus {
+    outline: none;
+
+}
+.count {
+    padding: 3%;
+    padding-top: 5%;
+    font-size: 14pt;
+    font-weight: 500;
+    vertical-align: central;
+}
+.d-inline {
+    display: inline;
+}
+
+.add-to-cart, .add-to-cart-unactive {
+    padding: 10% 10%;
+    display: block;
+    text-align: center;
+    background-color: #DE3C3C;
+    color: white;
+    font-size: medium;
+    /*display: none;*/
+}
+.add-to-cart:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+.product-header {
+    display: block;
+    font-weight: 400;
+    font-size: x-large;
+}
+.list-item-include > .product-link {
+    text-decoration: none;
+    color: #222222;
+}
+.product-link {
+    cursor: pointer;
+    /*margin-bottom:10px;*/
+}
+.add-to-cart-unactive {
+    background-color:#F3F3F3;
+}
+.free-space {
+    min-height: 5%;
+}
+.pagination {
+    width: 20%;
+}
+.pagination > li {
+    text-align: center;
+    width: 25%;
+    /*padding: 5%;*/
+    display: inline;
+    border: none;
+}
+.pagination > li.active {
+}
+.pagination > li > a {
+    min-width: 45px;
+    /*background-color: #DE3C3C;*/
+    cursor: pointer;
+    width: 25%;
+    padding: 10%;
+    /*margin: 30%;*/
+    /*height: 10%;*/
+    /*width: 50%;*/
+    border:none;
+    /*color:white;*/
+    font-size: medium;
+}
+
+.half-opacity {
+    opacity: 0.3;
+}
+
+.hidden {
+    display: none;
+}
+.shown {
+    display: block;
+}
+
+.pagination > li:first-child > a, .pagination > li:first-child > span,
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-radius: 0;
+}
+
+.d-none {
+    display: none;
+}
+.d-block {
+    display: block;
+}
+
+
+.btn-bordered {
+    border: 0.15em solid #A4A4A4;
+    padding: 0.5em 1.5em;
+    margin-right: 1em;
+    background-color: white;
+    color: inherit;
+    font-weight: 500;
+    /*font-style: italic*/
+}
+.btn-bordered:hover {
+    text-decoration: none;
+    color: inherit;
+    border-color: #DE3C3C;
+    cursor: pointer;
+}
+.btn-bordered:focus {
+    text-decoration: none;
+    outline: none;
+}
+.btn-bordered:disabled {
+    border-color: #CCCCCC;
+    /*cursor: default;*/
+}
+.selected, .selected:disabled {
+    border-color: #DE3C3C;
+}
+.selected:disabled, .btn-bordered:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+#cart-count {
+    display: inline-block; padding-top: 2px; height: 32px; width: 32px; text-align:center; vertical-align:central; font-size: 14pt; font-weight: 600;background-color: #DE3C3C; color: white;
+}
+#cart-icon {
+    height: 32px; width: 32px; display: inline-block;
+}
+.cart-link, .cart-link:hover, .cart-link:active, .cart-link:focus {
+    text-decoration: none;
+}
+
+.msg-box {
+    position: fixed;
+    height: 30em;
+    width: 50em;
+    top: calc((100% - 30em)/2);
+    left: calc((100% - 50em)/2);
+    background: white;
+    color: black;
+    cursor: default;
+    padding: 1em;
+}
+
+.msg-box-header {
+    height: 2.25em;
+    border-bottom: 1px solid #CCCCCC;
+}
+.msg-box-content {
+    position: relative;
+    font-size: 12pt;
+    height: 16.75em;
+}
+.msg-box-controls {
+    height: 20%;
+    padding-top: 10px;
+    position: relative;
+    text-align: center;
+}
+.msg-box-controls  .add-to-cart {
+    border-radius: 0;
+    display: block;
+    width: 7.5em;
+    padding: 0.5em;
+    margin: auto;
+}
+.msg-box-background {
+    background: rgba(0,0,0,0.75);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+.ld-user-customized {
+    color: #DE3C3C; 
+    font-size: 36pt;
+}
+#preloader-holder {
+    padding: 2em 0;
+    text-align: center;
 }

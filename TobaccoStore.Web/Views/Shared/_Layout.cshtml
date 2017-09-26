@@ -3,38 +3,205 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>Kentavt&Co Store</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/Content/loading.css" />
     @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/client")
+    <style>
+        .hdr-msg {
+            padding: 0.5%;
+            padding-left: 1%;
+            padding-right: 2.5%;
+            background-color: #222222;
+            color: #dfdfdf;
+        }
+        .hdr-msg a, .hdr-msg a:visited {
+            color: #dfdfdf;
+        }
+        /* f - stands for floating/location */
+        .f-left {
+            float: left;
+        }
+        .f-right {
+            float: right;
+        }
+
+        .hdr-main {
+            height: 90px;
+            color: #dfdfdf;
+            background: rgba(0, 0, 0, 0.5) !important;
+            padding-top: 20px;
+            width: 100%;
+        }
+        .row {
+            width: 100%;
+        }
+
+        h2 {
+            font-weight: 700;
+        }
+        .menu-item {
+            display: inline-block;
+            height: 70%;
+            padding: 0 2.5%;
+        }
+        .menu-item a {
+            font-weight: 700;
+            height: 70%;
+            font-size: 14pt;
+            color:white;
+        }
+        .menu-item a:hover {
+            text-decoration: none;
+            color: #4aaf30;
+            /*background: rgba(0,0,0,0.5);*/
+        }
+        .menu-item a:active, .menu-item a:visited, .menu-item a:focus {
+            text-decoration: none !important;
+            /*color: pink;*/
+        }
+        .menu-item a .active-link {
+            color: #4aaf30;
+        }
+        /*a {
+            color: white;
+        }*/
+        .active-link {
+            /*border: 2px solid white;*/
+            padding: 2%;
+            /*padding-top*/
+            background: rgba(0,0,0,0.35);
+            min-height: 70px;
+        }
+        .active-link a {
+            color: #4aaf30;
+        }
+        .hdr-img {
+            height: 540px;
+            /*color: red;*/
+            width: 100%;
+            /*background: url(/Content/fumariBackground.jpg) no-repeat center center;*/
+        }
+        #logo {
+            height: 90px;
+            width: 180px;
+            background: url(/Content/logo2.png) no-repeat center left;
+        }
+        #logo:hover {
+            cursor: pointer;
+            opacity: 0.75;
+        }
+        #main-menu-container {
+            position: relative; 
+            height: 540px;
+        }
+        #main-menu {
+            position: absolute; width: 100%; height: 100%; top:0; left: 0;
+        }
+        #toStoreBtn {
+            background: url(/Content/arrowDown.png) no-repeat bottom center;
+            padding-top: 5px; 
+            height: 40px; 
+            width: 80px; 
+            margin: auto; 
+            cursor: pointer;
+        }
+        .hdr-button {
+            color: white;
+            padding: 0 14px;
+        }
+        .hrd-button:hover {
+            text-decoration: underline;
+        }
+        .hdr-msg a:hover {
+            color: #4aaf30;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body ng-app="ClientApp">
+    <div class="hdr-msg">
+        <div class="d-inline">
+            Уважаемые посетители, просим вас ознакомиться с <u><a onclick="termsOfTransactioningClick()">условиями</a></u> проведения сделки на нашем сайте!
+</div>
+        <div class="d-inline f-right">
+            <a class="hdr-button" href="/about" title="О нас">О нас</a>
+            <a class="hdr-button" href="/delivery" title="Доставка">Доставка</a>
+            <a class="hdr-button" href="/payment" title="Оплата">Оплата</a>
+        </div>
+    </div>
+    <div id="main-menu-container">
+        <div class="hdr-img" style="background: url(/Content/fumariBackground.jpg) no-repeat center center; position: absolute; width: 100%;">
+        </div>
+        <div id="main-menu">
+            <div class="col-lg-2 col-md-2">
+                <a href="/#!/" onclick="hideBannerZone()" title="Home">
+                    <div id="logo">
+                    </div>
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
+            <div class="hdr-main">
+                <div class="col-lg-6 col-md-6">
+                    <div class="menu-item">
+                        <a href="/#!/fumari" onclick="menuButtonClicked('fumari')" title="Табак Fumari">Fumari</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/#!/serbentli" onclick="menuButtonClicked('serbentli')" title="Табак Serbentli">
+                            Serbentli
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/#!/alfakher" onclick="menuButtonClicked('alfakher')" title="Табак Al Fakher">
+                            Al Fakher
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/#!/darkside" onclick="menuButtonClicked('darkside')" title="Табак Darkside">
+                            Darkside
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="/#!/test" onclick="menuButtonClicked('test')" title="Табак Test">
+                            Test
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                </div>
+                <div class="col-lg-1 col-md-1 f-right" style="padding-top: 10px;">
+                    <a href="/#!/cart" onclick="hideBannerZone()" class="cart-link">
+                        <div id="cart-icon">
+                            <img height="32" src="~/Content/cartIcon.png" />
+                        </div>
+                        <div id="cart-count">
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+    <div style="height: 40px; width: 100%; background-color: #222222; text-align: center; color: white;">
+        <div id="toStoreBtn" onclick="toStoreBtnClick()">
+            <span>В магазин</span>
+        </div>
+    </div>
+    <ng-include src="'/Client/Views/Partial/Terms.html'"></ng-include>
     <div class="container body-content">
-        @RenderBody()
+            <div id="preloader-holder">
+                <div class="ld ld-ring ld-spin-fast ld-user-customized" style="animation-duration:2.0s"></div>
+            </div>
+            <div id="content-holder">
+                @RenderBody()
+            </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Kentavr&Co</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -1,77 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Web;
+using TobaccoStore.Web.Models.Model.Entities;
 
 namespace TobaccoStore.Web.Models
 {
-    public class TobaccoRepository
+    public class TobaccoRepository : EfRepository<ProductInfo, int>
     {
-        private readonly ApplicationDbContext _db = null;
-        public TobaccoRepository(ApplicationDbContext context)
-        {
-            _db = context;
-        }
-        public TobaccoRepository() : this(ApplicationDbContext.GetInstance())
+        public int PackageInfoe { get; private set; }
+
+        public TobaccoRepository() : base(ApplicationDbContext.GetInstance())
         {
 
         }
-        public DataPortion<TobaccoInfo> GetMany(int page, int pageSize = 10, Ordering<TobaccoInfo> ordering = null)
+        public DataPortion<ProductInfo> FindByName(string q, int page, int pageSize = 10, Ordering<ProductInfo> ordering = null)
         {
-            var query = (ordering == null)
-                ? _db.TobaccoProducts
-                : ordering.Apply(_db.TobaccoProducts);
+            var keywords = q.Split(new char[] { ' ', '.', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // test this
+            var query = DataContext.Set<ProductInfo>().Include("PackageInfoes").Where(i => keywords.Any(kw => i.Name.Contains(kw)));
+
+            //skip take
+            if (ordering != null)
+                query = ordering.Apply(query);
 
             var totalItems = query.Count();
-
-            //if (totalItems <= pageSize)
 
             if (page * pageSize > totalItems && page != 1)
                 throw new Exception("Page number is too big");
 
-            var resultationEntities = (page == 1) 
-                ? query.Take(pageSize) 
+            var resultationEntities = (page == 1)
+                ? query.Take(pageSize)
                 : query.Skip((page - 1) * pageSize).Take(pageSize);
+            // temporarily
+            return new DataPortion<ProductInfo>(resultationEntities, totalItems);
+        }
+        public DataPortion<ProductInfo> FilterByManufacturer(int id, int page, int pageSize = 10, Ordering<ProductInfo> ordering = null)
+        {
+            var query = DataContext.Set<ProductInfo>()
+                .Include("PackageInfoes")
+                .Where(p => p.Manufacturer_Id == id)
+                .OrderBy(p => p.Id);
 
-            return new DataPortion<TobaccoInfo>(resultationEntities, totalItems);
-        }
-        public TobaccoInfo GetById(int id)
-        {
-            var result = _db.TobaccoProducts.Find(id);
-            //var result = _db.TobaccoProducts.Where(p => p.Id == id).FirstOrDefault();
+            if (ordering != null)
+                query = ordering.Apply(query);
 
-            if (result == null)
-                throw new Exception("Object not found");
+            var totalItems = query.Count();
 
-            return result;
-        }
-        public void Add(TobaccoInfo product)
-        {
-            _db.TobaccoProducts.Add(product);
-            _db.SaveChanges();
-        }
-        public void Delete(int id)
-        {
-            var item = _db.TobaccoProducts.Find(id);
-            _db.TobaccoProducts.Remove(item);
-            _db.SaveChanges();
-        }
-        public void Delete(TobaccoInfo item)
-        {
-            _db.TobaccoProducts.Remove(item);
-            _db.SaveChanges();
-        }
-        public bool Exists(TobaccoInfo item)
-        {
-            return _db.TobaccoProducts.Any(t => t.Id == item.Id);// (_db.TobaccoProducts.Find(item) == null) ? false : true;
-        }
-        public void Update(TobaccoInfo item)
-        {
-            _db.TobaccoProducts.Attach(item);
-            _db.Entry(item).State = System.Data.Entity.EntityState.Modified;
-            _db.SaveChanges();
+            if ((page - 1) * pageSize > totalItems && page != 1)
+                throw new Exception("Page number is too big");
+
+            var resultationEntities = (page == 1)
+                ? query.Take(pageSize)
+                : query.Skip((page - 1) * pageSize).Take(pageSize);
+            // temporarily
+            return new DataPortion<ProductInfo>(resultationEntities, totalItems);
         }
 
+        public override void Update(ProductInfo item)
+        {
+            //DataContext.Set<TEntity>().Attach(item);
+            var dbItem = DataContext.Set<ProductInfo>().Include("PackageInfoes").Where( p => p.Id == item.Id).FirstOrDefault();
+            //.Find(item.Id);               //var dbPackageInfoes = DataContext.Set<PackageInfo>().Where(p => p.ProductInfoId == )
+
+            //IEnumerable<PackageInfo> dbPackageInfoes = DataContext.Set<PackageInfo>().Where(p => p.ProductInfoId == item.Id).ToList();
+
+            if (dbItem == null)
+                return;
+
+            DataContext.Entry(dbItem).CurrentValues.SetValues(item);
+            //DataContext.Entry(dbPackageInfoes).CurrentValues.SetValues(dbPackageInfoes);
+            foreach(var packageInfo in dbItem.PackageInfoes)
+                if (!item.PackageInfoes.Any(e => e.Id == packageInfo.Id))
+                    DataContext.Set<PackageInfo>().Remove(packageInfo);
+
+            foreach(var packageInfo in item.PackageInfoes)
+            {
+                var dbEntry = dbItem.PackageInfoes.SingleOrDefault(e => e.Id == packageInfo.Id);
+                if (dbEntry != null)
+                    DataContext.Entry(dbEntry).CurrentValues.SetValues(packageInfo);
+                else
+                    DataContext.Set<PackageInfo>().Add(packageInfo);
+            }
+
+            DataContext.Entry(dbItem).State = EntityState.Modified;
+            DataContext.SaveChanges();
+        }
     }
 }

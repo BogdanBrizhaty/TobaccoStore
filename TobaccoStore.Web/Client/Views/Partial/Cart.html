@@ -1,10 +1,40 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
-
-</body>
-</html>
+﻿<div class="row">
+    <!--<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        Id
+    </div>-->
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+        <span>Manufacturer</span>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+        <span>Name</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <span>x1</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <span>Units</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <span>Price</span>
+    </div>
+</div>
+<div class="row" ng-repeat="product in ProductsInCart">
+    <!--<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+        {{product.Id}}
+    </div>-->
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+        <a href="/#!/{{product.ManufacturerName}}">{{product.ManufacturerName}}</a>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+        <a href="/#!/tobacco/{{product.Id}}">{{product.Name}}</a>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <span>{{product.ListPrice}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <span>{{product.Amount}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <span>{{product.Price}}</span>
+    </div>
+</div>

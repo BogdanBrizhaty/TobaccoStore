@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -206,11 +208,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DiscountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MailService.cs" />
     <Compile Include="Migrations\201708310944522_Initial.cs" />
     <Compile Include="Migrations\201708310944522_Initial.Designer.cs">
       <DependentUpon>201708310944522_Initial.cs</DependentUpon>
@@ -219,13 +224,94 @@
     <Compile Include="Migrations\201708310946398_Changing product to tobacco model.Designer.cs">
       <DependentUpon>201708310946398_Changing product to tobacco model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709021353451_ProductManufacturer.cs" />
+    <Compile Include="Migrations\201709021353451_ProductManufacturer.Designer.cs">
+      <DependentUpon>201709021353451_ProductManufacturer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709021401146_ProductManufacturerUpd.cs" />
+    <Compile Include="Migrations\201709021401146_ProductManufacturerUpd.Designer.cs">
+      <DependentUpon>201709021401146_ProductManufacturerUpd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709021458535_test.cs" />
+    <Compile Include="Migrations\201709021458535_test.Designer.cs">
+      <DependentUpon>201709021458535_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709021513469_tobaccoinforeplaced.cs" />
+    <Compile Include="Migrations\201709021513469_tobaccoinforeplaced.Designer.cs">
+      <DependentUpon>201709021513469_tobaccoinforeplaced.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709021951314_DiscountAndOrderEntities.cs" />
+    <Compile Include="Migrations\201709021951314_DiscountAndOrderEntities.Designer.cs">
+      <DependentUpon>201709021951314_DiscountAndOrderEntities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709021955536_DiscountAndDbSets.cs" />
+    <Compile Include="Migrations\201709021955536_DiscountAndDbSets.Designer.cs">
+      <DependentUpon>201709021955536_DiscountAndDbSets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709061457080_DatatypeCHange.cs" />
+    <Compile Include="Migrations\201709061457080_DatatypeCHange.Designer.cs">
+      <DependentUpon>201709061457080_DatatypeCHange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709061524465_CartInclude.cs" />
+    <Compile Include="Migrations\201709061524465_CartInclude.Designer.cs">
+      <DependentUpon>201709061524465_CartInclude.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709080934246_TokenToOrderDetailsAdded.cs" />
+    <Compile Include="Migrations\201709080934246_TokenToOrderDetailsAdded.Designer.cs">
+      <DependentUpon>201709080934246_TokenToOrderDetailsAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.cs" />
+    <Compile Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.Designer.cs">
+      <DependentUpon>201709121012477_Price_to_ProductInfo_added_12_09.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171623201_PackageWeightToStringDataType.cs" />
+    <Compile Include="Migrations\201709171623201_PackageWeightToStringDataType.Designer.cs">
+      <DependentUpon>201709171623201_PackageWeightToStringDataType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171851391_PackageInfo.cs" />
+    <Compile Include="Migrations\201709171851391_PackageInfo.Designer.cs">
+      <DependentUpon>201709171851391_PackageInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171854265_PackageInfoInOrderItem.cs" />
+    <Compile Include="Migrations\201709171854265_PackageInfoInOrderItem.Designer.cs">
+      <DependentUpon>201709171854265_PackageInfoInOrderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171906577_PackageInfoWorking.cs" />
+    <Compile Include="Migrations\201709171906577_PackageInfoWorking.Designer.cs">
+      <DependentUpon>201709171906577_PackageInfoWorking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171920439_PackageInfoSt2.cs" />
+    <Compile Include="Migrations\201709171920439_PackageInfoSt2.Designer.cs">
+      <DependentUpon>201709171920439_PackageInfoSt2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171928405_PackageInfoSt22.cs" />
+    <Compile Include="Migrations\201709171928405_PackageInfoSt22.Designer.cs">
+      <DependentUpon>201709171928405_PackageInfoSt22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709171932323_PackageInfoSt222.cs" />
+    <Compile Include="Migrations\201709171932323_PackageInfoSt222.Designer.cs">
+      <DependentUpon>201709171932323_PackageInfoSt222.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Binders\CustomByteArrayModelBinder.cs" />
+    <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\DataPortion.cs" />
+    <Compile Include="Models\DiscountRepository.cs" />
+    <Compile Include="Models\EfRepository.cs" />
+    <Compile Include="Models\ManufacturerRepository.cs" />
+    <Compile Include="Models\Model.Entities\Discount.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ProductInfo.cs" />
-    <Compile Include="Models\TobaccoDbSet.cs" />
-    <Compile Include="Models\TobaccoInfo.cs" />
+    <Compile Include="Models\Model.Entities\IDbEntity.cs" />
+    <Compile Include="Models\Model.Entities\OrderDetails.cs" />
+    <Compile Include="Models\Model.Entities\PackageInfo.cs" />
+    <Compile Include="Models\Ordering.cs" />
+    <Compile Include="Models\Model.Entities\OrderItem.cs" />
+    <Compile Include="Models\Model.Entities\ProductInfo.cs" />
+    <Compile Include="Models\Model.Entities\ProductManufacturer.cs" />
+    <Compile Include="Models\OrderRepository.cs" />
+    <Compile Include="Models\TobaccoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -233,11 +319,59 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Client\app.js" />
+    <Content Include="Client\Controllers\CartController.js" />
+    <Content Include="Client\Controllers\HomeController.js" />
+    <Content Include="Client\Controllers\ManageController.js" />
+    <Content Include="Client\Controllers\TobaccoController.js" />
+    <Content Include="Client\Directives\ActivePageHelperDirective.js" />
+    <Content Include="Client\Directives\AddToCartButtonDirective.js" />
+    <Content Include="Client\Directives\HintDirective.js" />
+    <Content Include="Client\Directives\PagingDirective.js" />
+    <Content Include="Client\Services\CartService.js" />
+    <Content Include="Client\Services\CredentialsService.js" />
+    <Content Include="Client\Services\DiscountService.js" />
+    <Content Include="Client\Services\OrderService.js" />
+    <Content Include="Client\Services\TobaccoService.js" />
+    <Content Include="Client\Views\General\About.html" />
+    <Content Include="Client\Views\General\DeliveryAndPayment.html" />
+    <Content Include="Client\Views\General\Home.html" />
+    <Content Include="Client\Views\General\imgandmenucontainer.html" />
+    <Content Include="Client\Views\General\Manage.html" />
+    <Content Include="Client\Views\General\Tobacco.html" />
+    <Content Include="Client\Views\Partial\Manage.add.html" />
+    <Content Include="Client\Views\Partial\Cart.html" />
+    <Content Include="Client\Views\Partial\List.html" />
+    <Content Include="Client\Views\Partial\Login.html" />
+    <Content Include="Client\Views\Partial\OrderFail.html" />
+    <Content Include="Client\Views\Partial\OrderSuccess.html" />
+    <Content Include="Client\Views\Partial\ProceedOrder.html" />
+    <Content Include="Client\Views\Partial\ProductInfo.html" />
+    <Content Include="Client\Views\Partial\ProductList.html" />
+    <Content Include="Client\Views\Partial\Terms.html" />
+    <Content Include="Client\Views\Partial\ViewOrder.html" />
+    <Content Include="Content\alfakherBackground.png" />
+    <Content Include="Content\arrowDown.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cartIcon.png" />
+    <Content Include="Content\close.svg" />
+    <Content Include="Content\darksideBackground.png" />
+    <Content Include="Content\emptyfile.png" />
+    <Content Include="Content\fumariBackground.jpg" />
+    <Content Include="Content\loading.css" />
+    <Content Include="Content\logo.png" />
+    <Content Include="Content\logo2.png" />
+    <Content Include="Content\serbentliBackground.png" />
+    <Content Include="Content\testBackground.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -259,7 +393,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Client\JSEventHandlers.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -304,12 +441,70 @@
     <EmbeddedResource Include="Migrations\201708310946398_Changing product to tobacco model.resx">
       <DependentUpon>201708310946398_Changing product to tobacco model.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709021353451_ProductManufacturer.resx">
+      <DependentUpon>201709021353451_ProductManufacturer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709021401146_ProductManufacturerUpd.resx">
+      <DependentUpon>201709021401146_ProductManufacturerUpd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709021458535_test.resx">
+      <DependentUpon>201709021458535_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709021513469_tobaccoinforeplaced.resx">
+      <DependentUpon>201709021513469_tobaccoinforeplaced.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709021951314_DiscountAndOrderEntities.resx">
+      <DependentUpon>201709021951314_DiscountAndOrderEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709021955536_DiscountAndDbSets.resx">
+      <DependentUpon>201709021955536_DiscountAndDbSets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709061457080_DatatypeCHange.resx">
+      <DependentUpon>201709061457080_DatatypeCHange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709061524465_CartInclude.resx">
+      <DependentUpon>201709061524465_CartInclude.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709080934246_TokenToOrderDetailsAdded.resx">
+      <DependentUpon>201709080934246_TokenToOrderDetailsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709121012477_Price_to_ProductInfo_added_12_09.resx">
+      <DependentUpon>201709121012477_Price_to_ProductInfo_added_12_09.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171623201_PackageWeightToStringDataType.resx">
+      <DependentUpon>201709171623201_PackageWeightToStringDataType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171851391_PackageInfo.resx">
+      <DependentUpon>201709171851391_PackageInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171854265_PackageInfoInOrderItem.resx">
+      <DependentUpon>201709171854265_PackageInfoInOrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171906577_PackageInfoWorking.resx">
+      <DependentUpon>201709171906577_PackageInfoWorking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171920439_PackageInfoSt2.resx">
+      <DependentUpon>201709171920439_PackageInfoSt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171928405_PackageInfoSt22.resx">
+      <DependentUpon>201709171928405_PackageInfoSt22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709171932323_PackageInfoSt222.resx">
+      <DependentUpon>201709171932323_PackageInfoSt222.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Client\RouteConfig.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
